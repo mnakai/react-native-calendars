@@ -141,9 +141,11 @@ export default class Marking extends Component {
     if (this.props.theme.textMarkingCustomize) {
       let textDot = ""
       if (index || item || key || color) {
+        const dotConfig = dotColor.split(',')
         textDot = "●"
-        if (this.props.dots) {
-          textDot = this.props.dots[0]
+        if (dotConfig.length > 1) {
+          color = dotConfig[0]
+          textDot = dotConfig[1]
         }
       }
       return (
