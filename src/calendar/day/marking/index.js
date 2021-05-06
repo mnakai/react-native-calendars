@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {shouldUpdate, extractComponentProps} from '../../../component-updater';
 import styleConstructor from './style';
 import Dot from '../dot';
@@ -136,6 +136,25 @@ export default class Marking extends Component {
         key = item.key;
       }
       color = selected && item.selectedDotColor ? item.selectedDotColor : item.color;
+    }
+
+    if (this.props.theme.textMarkingCustomize) {
+      let textDot = ""
+      if (index || item || key || color) {
+        textDot = "●"
+        if (this.props.dots) {
+          textDot = this.props.dots[0]
+        }
+      }
+      return (
+        <Text
+          {...dotProps}
+          key={key}
+          style={{ color }}
+        >
+        { textDot }
+        </Text>
+      );
     }
 
     return (
