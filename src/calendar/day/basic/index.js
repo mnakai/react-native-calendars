@@ -138,7 +138,7 @@ export default class BasicDay extends Component {
 
   renderMarking() {
     const {theme, markingType} = this.props;
-    const {selected, marked, dotColor, dots, periods} = this.marking;
+    const {selected, marked, dotColor, dotComponent, dots, periods} = this.marking;
 
     return (
       <Marking
@@ -149,6 +149,7 @@ export default class BasicDay extends Component {
         disabled={this.isDisabled()}
         today={this.isToday()}
         dotColor={dotColor}
+        dotComponent={dotComponent}
         dots={dots}
         periods={periods}
       />

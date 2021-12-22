@@ -43,6 +43,7 @@ export default class Marking extends Component {
     selectedColor: PropTypes.string,
     selectedTextColor: PropTypes.string,
     dotColor: PropTypes.string,
+    dotComponent: PropTypes.object,
     //multi-dot
     dots: PropTypes.arrayOf(PropTypes.shape(DOT)),
     //multi-period
@@ -69,6 +70,7 @@ export default class Marking extends Component {
       'selectedColor', 
       'selectedTextColor', 
       'dotColor',
+      'dotComponent',
       'dots',
       'periods'
     ]);
@@ -126,7 +128,7 @@ export default class Marking extends Component {
   }
 
   renderDot(index, item) {
-    const {selected, dotColor} = this.props;
+    const {selected, dotColor, dotComponent} = this.props;
     const dotProps = extractComponentProps(Dot, this.props);
     let key = index;
     let color = dotColor;
@@ -139,24 +141,35 @@ export default class Marking extends Component {
     }
 
     if (this.props.theme.textMarkingCustomize) {
-      let textDot = ""
-      if (index || item || key || color) {
-        const dotConfig = dotColor.split(',')
-        textDot = "●"
-        if (dotConfig.length > 1) {
-          color = dotConfig[0]
-          textDot = dotConfig[1]
+      if (dotComponent) {
+        return (
+          <View
+            {...dotProps}
+            key={key}
+          >
+            { dotComponent }
+          </View>
+        );
+      } else {
+        let textDot = ""
+        if (index || item || key || color) {
+          const dotConfig = dotColor.split(',')
+          textDot = "●"
+          if (dotConfig.length > 1) {
+            color = dotConfig[0]
+            textDot = dotConfig[1]
+          }
         }
+        return (
+          <Text
+            {...dotProps}
+            key={key}
+            style={{ color }}
+          >
+          { textDot }
+          </Text>
+        );
       }
-      return (
-        <Text
-          {...dotProps}
-          key={key}
-          style={{ color }}
-        >
-        { textDot }
-        </Text>
-      );
     }
 
     return (
